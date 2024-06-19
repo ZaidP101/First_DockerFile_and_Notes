@@ -1,0 +1,52 @@
+############################### Notes For Docker ###############################
+
+
+
+# All the following is using Linux Terminal
+
+While running the docker build / run command an error pops ups
+
+Error = docker: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Head "http://%2Fvar%2Frun%2Fdocker.sock/_ping": dial unix /var/run/docker.sock: connect: permission denied.
+
+
+Solution = 
+
+Step 1 - run in terminal = grep docker /etc/group
+if the result is sililar to "docker:x:138:" this means user is no added to docker group
+Add user = sudo usermod -aG docker sam         (sam = user name)
+then run command = id sam      (to check the user added status)
+again run command = grep docker /etc/group
+in results you will find = docker:x:138:sam    (here the user is added to the docker group)
+also run = ls -l /var/run/docker.sock
+results should be = srw-rw---- 1 root docker 0 Jun 16 16:49 /var/run/docker.sock
+
+
+###### Now if you run or build your docker image another error pops out
+
+
+Error : ERROR: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Head "http://%2Fvar%2Frun%2Fdocker.sock/_ping": dial unix /var/run/docker.sock: connect: permission denied
+
+Solution = 
+
+Step 2 - run the following command, replace sam whith you user name = sudo chown sam /var/run/docker.sock
+
+Step 3 - lastly run command = sudo systemctl restart docker
+
+
+# Docker Processes
+1 -  Build an Image = docker build -t first_ubuntu_image .    (-t = name tag & '.' = file present in this current folder)
+2 - Contanerising Image/run = docker run --name first_ubuntu_container first_ubuntu_image
+
+
+
+# Details
+
+1 - docker container ls = list all running containers
+2 - docker container ls -a = list all running containers and stoped as well
+3 - docker start or stop xyz(container name) 
+4 - -it(flag) = stands for interactive, connect but donot exit 
+5 - docker images ls = list all running images
+6 - -p(flag) = stands for port maping, eg :- docker run -it -p 2020:2020 (here container port is should run on our machine local host port)
+
+
+

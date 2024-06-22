@@ -35,8 +35,12 @@ Step 3 - lastly run command = sudo systemctl restart docker
 
 # Docker Processes
 1 -  Build an Image = docker build -t first_ubuntu_image .    (-t = name tag & '.' = file present in this current folder)
-2 - Contanerising Image/run = docker run --name first_ubuntu_container first_ubuntu_image
-
+2 - Contanerising Image/run = docker run -it -p 9000:9000 first_ubuntu_image
+3 - Creat your account on docker hub and creat a repo, copy the name given for the image 
+4 - creat an image of the name provided
+5 - login to docker in terminal using 'docker login'
+6 - docker push xyz(name of the  image coppied)
+7 - 
 
 
 # Details
@@ -47,6 +51,26 @@ Step 3 - lastly run command = sudo systemctl restart docker
 4 - -it(flag) = stands for interactive, connect but donot exit 
 5 - docker images ls = list all running images
 6 - -p(flag) = stands for port maping, eg :- docker run -it -p 2020:2020 (here container port is should run on our machine local host port)
+
+
+# Volume
+
+Problem : Once your container is deleted the data in it is gone as well. To solve this docker Volume is used where we mout our data on the container.
+Here the data is on our machine and it is in sync with the docker container. In a case of container lost/deleted we have our data stored on our local machine.
+
+1 - create a code or data file
+2 - run a node image (to install node)
+3 - type command = docker run -it -v /local/folder/adress:/in/container/address node bash ---- here -v is for volume & node is the image we want to   run and lastly 'bash' this means open a bash terminal in the container
+4 - to check that both are connected we run 'npm install -g(globally) nodemon'(a utility that helps in automatically restarting your 
+Node.js application when it detects changes in the source files)
+5 - run 'nodemon xyz.js(file name)'
+6 - try and edit the file on your local machine and you see the container refreshes automatically
+
+
+
+
+# Networking
+
 
 
 

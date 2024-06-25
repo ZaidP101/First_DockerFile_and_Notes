@@ -67,9 +67,43 @@ Node.js application when it detects changes in the source files)
 6 - try and edit the file on your local machine and you see the container refreshes automatically
 
 
-
-
 # Networking
+
+Bridge
+1 - run =  docker run -it --name network3 zaidp101/network_test bash
+2 - try 'ping google.com' -  if this works then the conatiner is connected via bridge network
+    if ping command not found then = apt-get update -y & apt-get install -y iputils-ping
+3 - open local host terminal and run 'docker inspect bridge' you will find network3 connected by bridge
+4 - creat your own network = docker network creat xyz
+5 - run container on own network = docker run -it --network xyz --name abc zaid/test(your repo name pushed on dockerhub)
+6 - connect a container to another network at the same time = docker network connect pqr(new previously created network) abc(container)
+    now you will find two different network on running 'hostname -i' inside the container
+Host
+7 - no port maping required if = docker run -it --network host --name server1 zaid/firstimage bash
+
+overlay
+This network connect multiple docker demons together  
+
+
+
+# Dockerfile
+
+1 - FROM node:18-alpine  = Use the official Node.js image from the Docker Hub
+
+
+2 - WORKDIR /home/app  = Set the working directory in the container
+
+
+3 - COPY package*.json package.json  = Copy package.json and package-lock.json to the working directory
+
+
+4 - RUN npm install  = Install the dependencies
+
+
+5 - COPY . .  = Copy all files from the local project directory to the working directory in the container
+
+
+6 - ENTRYPOINT ["node", "main.js"]   =   Specify the command to run the main.js file
 
 
 
